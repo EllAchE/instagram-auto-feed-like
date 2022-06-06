@@ -1,0 +1,21 @@
+{
+    "name": "instagram-auto-feed-like",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.ts",
+    "scripts": {
+        "start": "ts-node ./src/index.ts",
+        "dev": "nodemon ./src/index.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "instagram-private-api": "^1.45.3",
+        "ts-node": "^10.7.0",
+        "dotenv": "^16.0.1"
+    },
+    "devDependencies": {
+        "@types/node": "^17.0.40"
+    }
+}
