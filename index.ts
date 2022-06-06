@@ -1,0 +1,1 @@
+import * from 'instagram-web-api'
