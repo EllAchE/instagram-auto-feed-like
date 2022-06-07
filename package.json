@@ -4,14 +4,15 @@
     "description": "",
     "main": "index.ts",
     "scripts": {
-        "start": "ts-node ./src/index.ts",
-        "dev": "nodemon ./src/index.ts"
+        "start": "ts-node ./src/index2.ts",
+        "dev": "nodemon ./src/index2.ts"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "instagram-private-api": "^1.45.3",
+        "instagram-web-api": "2.2.2",
+        "tough-cookie-filestore2": "1.0.0",
         "ts-node": "^10.7.0",
         "dotenv": "^16.0.1"
     },

@@ -1,11 +1,15 @@
-import { IgApiClient } from 'instagram-private-api';
+// import { IgApiClient } from 'instagram-web-api';
+// import { logIn } from './login';
 
-const ig = new IgApiClient();
+// const ig = new IgApiClient();
+// if (process.env.IG_USERNAME && process.env.IG_PASSWORD) {
+//   ig.state.generateDevice(process.env.IG_USERNAME);
+// }
 
-const loggedInUser = await ig.account.login(process.env.IG_USERNAME, process.env.IG_PASSWORD);
-const items = ig.feed.accountFollowing().items$;
+// async function test(ig: IgApiClient) {
+//   const auth = await logIn(ig);
 
-items.forEach((item) => {
-  console.dir(item);
-  console.log(item);
-});
+//   ig.fee;
+// }
+
+// test(ig);
