@@ -1,15 +1,9 @@
-// import { IgApiClient } from 'instagram-web-api';
-// import { logIn } from './login';
+import { generateClientAndLogIn } from './login';
+import { likeTimelinePostsUntilLastLiked } from './timeline';
 
-// const ig = new IgApiClient();
-// if (process.env.IG_USERNAME && process.env.IG_PASSWORD) {
-//   ig.state.generateDevice(process.env.IG_USERNAME);
-// }
+async function test() {
+  const ig = await generateClientAndLogIn();
+  await likeTimelinePostsUntilLastLiked(ig);
+}
 
-// async function test(ig: IgApiClient) {
-//   const auth = await logIn(ig);
-
-//   ig.fee;
-// }
-
-// test(ig);
+test();
