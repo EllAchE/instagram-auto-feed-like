@@ -1,4 +1,5 @@
 import { EndCursor, MappedTimelineItem } from './types';
+import { simulateHumanity } from './utils';
 
 // getHome docs https://github.com/jlobos/instagram-web-api#gethome
 export async function getTimelinePage(ig: any, endCursor?: string) {
@@ -16,13 +17,13 @@ export async function getTimelineItems(
   mappedTimelineItems: MappedTimelineItem[];
   newEndCursor: EndCursor;
 }> {
-  const timelinePage = await getTimelinePage(ig, endCursor);
+  const timelinePage = await getTimelinePage(ig, endCursor?.end_cursor);
 
   // Getting the array of items
   const timelineItems: any[] =
     timelinePage.data.user.edge_web_feed_timeline.edges;
   // Needed for pagination
-  const newEndCursor: string =
+  const newEndCursor: EndCursor =
     timelinePage.data.user.edge_web_feed_timeline.page_info;
 
   const mappedTimelineItems = timelineItems.map((item: any) =>
@@ -51,34 +52,30 @@ function mapTimelineItem(timelineItem: any): MappedTimelineItem {
 export async function likeTimelinePostsUntilLastLiked(ig: any) {
   let endCursor: EndCursor | undefined = undefined;
   let i = 0;
-  while (i < 3) {
+  // Pagination loads 20 posts, so this fetches 300 total before termination
+  console.log('before loop');
+  while (i < 20) {
     //@ts-ignore
     const { newEndCursor, mappedTimelineItems } = await getTimelineItems(
       ig,
       endCursor
     );
     endCursor = newEndCursor;
-    //
-    mappedTimelineItems.sort(
-      (obja: MappedTimelineItem, objb: MappedTimelineItem) => {
-        if (obja.taken_at_timestamp > objb.taken_at_timestamp) {
-          return 1;
-        }
-        return 0;
-      }
-    );
 
     for (const item of mappedTimelineItems) {
-      console.dir(`${item.owner} ${item.taken_at_timestamp}`);
-      // Exit loop if encountering a liked photo. Assumes that the
-      if (item.viewer_has_liked) {
-        return;
+      console.log('before if');
+      if (!item.viewer_has_liked) {
+        await ig.like({ mediaId: item.id });
+
+        console.log(
+          `liked post from ${item?.owner?.username}, posted at ${item.taken_at_timestamp}`
+        );
       }
 
-      // like it if if not liked
-      // await ig.like({ mediaId: item.id });
+      // await simulateHumanity();
     }
 
+    console.log('before increment');
     // Termination failsafe; can modify this if using it differently
     i += 1;
   }
