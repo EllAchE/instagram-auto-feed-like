@@ -16,6 +16,9 @@ export async function generateClientAndLogIn(): Promise<typeof Instagram> {
 
     const { user, authenticated, username, password, cookies } =
       await ig.login();
+
+    console.log('logged in');
+
     return ig;
   } else {
     throw new Error('Must have values for IG_USERNAME and IG_PASSWORD');

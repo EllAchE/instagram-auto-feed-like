@@ -53,7 +53,9 @@ export async function likeTimelinePostsUntilLastLiked(ig: any) {
   let endCursor: EndCursor | undefined = undefined;
   let i = 0;
   // Pagination loads 20 posts, so this fetches 300 total before termination
-  console.log('before loop');
+
+  simulateHumanity(1000, 4500);
+
   while (i < 20) {
     //@ts-ignore
     const { newEndCursor, mappedTimelineItems } = await getTimelineItems(
@@ -63,7 +65,6 @@ export async function likeTimelinePostsUntilLastLiked(ig: any) {
     endCursor = newEndCursor;
 
     for (const item of mappedTimelineItems) {
-      console.log('before if');
       if (!item.viewer_has_liked) {
         await ig.like({ mediaId: item.id });
 
@@ -72,10 +73,9 @@ export async function likeTimelinePostsUntilLastLiked(ig: any) {
         );
       }
 
-      // await simulateHumanity();
+      simulateHumanity(1000, 4500);
     }
 
-    console.log('before increment');
     // Termination failsafe; can modify this if using it differently
     i += 1;
   }
