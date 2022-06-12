@@ -73,7 +73,7 @@ export async function likeTimelinePostsUntilLastLiked(ig: any) {
         );
       }
 
-      simulateHumanity(1000, 4500);
+      simulateHumanity(1000, 9500);
     }
 
     // Termination failsafe; can modify this if using it differently
