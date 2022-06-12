@@ -57,6 +57,7 @@ export async function likeTimelinePostsUntilLastLiked(ig: any) {
   simulateHumanity(1000, 4500);
 
   while (i < 20) {
+    console.log('fetching new page number ' + i ' of run')
     //@ts-ignore
     const { newEndCursor, mappedTimelineItems } = await getTimelineItems(
       ig,
