@@ -14,9 +14,25 @@ export async function generateClientAndLogIn(): Promise<typeof Instagram> {
       cookieStore,
     });
 
-    const { user, authenticated, username, password, cookies } =
+    try {
       await ig.login();
+    } catch (err: any) {
+      if (err.error && err.error.message === 'checkpoint_required') {
+        const reader = require('readline');
+        const challengeUrl = err.error.checkpoint_url;
 
+        // await ig.updateChallenge({ challengeUrl, choice: 1 });
+        const a = 2;
+
+        //const code = reader.question('Insert Code: ');
+
+        // await ig.updateChallenge({ challengeUrl, securityCode: code });
+      } else {
+        console.log(err);
+      }
+    }
+
+    await ig.login();
     console.log('logged in');
 
     return ig;

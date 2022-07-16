@@ -56,8 +56,11 @@ export async function likeTimelinePostsUntilLastLiked(ig: any) {
 
   simulateHumanity(1000, 4500);
 
-  while (i < 20) {
-    console.log('fetching new page number ' + i + ' of run')
+  // exit early if 20 consecutive posts are already liked
+  let consecutiveUnliked = 0;
+
+  while (i < 20 && consecutiveUnliked < 20) {
+    console.log('fetching new page number ' + i + ' of run');
     //@ts-ignore
     const { newEndCursor, mappedTimelineItems } = await getTimelineItems(
       ig,
@@ -67,11 +70,14 @@ export async function likeTimelinePostsUntilLastLiked(ig: any) {
 
     for (const item of mappedTimelineItems) {
       if (!item.viewer_has_liked) {
+        consecutiveUnliked = 0;
         await ig.like({ mediaId: item.id });
 
         console.log(
           `liked post from ${item?.owner?.username}, posted at ${item.taken_at_timestamp}`
         );
+      } else {
+        consecutiveUnliked += 1;
       }
 
       simulateHumanity(1000, 9500);
